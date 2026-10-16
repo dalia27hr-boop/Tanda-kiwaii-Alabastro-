@@ -1,0 +1,28 @@
+{
+  "id": "./",
+  "name": "Tanda Kawaii",
+  "short_name": "Tanda Kawaii",
+  "description": "Sistema kawaii para organizar tandas, integrantes y pagos.",
+  "lang": "es-MX",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fffaf1",
+  "theme_color": "#ff93b9",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
