@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="es-MX">
-<head>
+<head> 
 <meta charset="utf-8">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>Tanda Kawaii</title>
+</head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ff93b9">
-<title>Tanda Kawaii</title>
 <style>
 :root{--ink:#5a4164;--pink:#ff93b9;--lilac:#bca5ed;--mint:#90ddc5;--sky:#a9dcf5;--cream:#fffaf1;--yellow:#ffe58a}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background-color:var(--cream);background-image:radial-gradient(circle at 15px 15px,rgba(255,147,185,.18) 2px,transparent 2.6px);background-size:34px 34px}
@@ -12,12 +14,12 @@
 </style>
 </head>
 <body>
-<header class="hero"><div style="font-size:25px">🍓 🎀 ☁️</div><h1>Tanda Kawaii</h1><p>Sistema kawaii para organizar pagos y turnos</p></header>
+<header class="hero"><div style="font-size:25px">🍓 🎀🐼 ☁️</div><h1>Tanda Kawaii</h1><p>Sistema kawaii para organizar pagos y turnos</p></header>
 <main class="wrap">
 <section id="license-panel" class="card">
 <h2>🔐 Activar licencia</h2><p class="muted">Ingresa la clave de tu licencia para consultar el plan contratado.</p>
 <div class="field"><label for="license-key">Clave de licencia</label><input id="license-key" autocomplete="off" placeholder="Escribe o pega tu clave"></div>
-<label class="remember"><input type="checkbox" id="remember-license"><span><b>Recordar mi activación en este dispositivo</b><br>Guardaremos la clave en este dispositivo y comprobaremos con Cloudflare si sigue activa cada vez que abras la aplicación.</span></label>
+<label class="remember"><input type="checkbox" id="remember-license"><span><b>Recordar mi activación en este dispositivo</b><br>Guardaremos la clave en este dispositivo y comprobaremos si sigue activa cada vez que abras la aplicación.</span></label>
 <button class="btn" id="activate-btn">💗 Activar licencia</button><p id="license-status" class="muted" aria-live="polite">Aún no se ha validado una licencia en esta sesión.</p>
 </section>
 <section id="app-panel" class="hidden">
@@ -26,7 +28,7 @@
 <div class="card"><div class="topline"><div><button class="btn lilac" id="back-btn">← Todas las tandas</button><h2 id="detail-title">Tanda</h2><p class="muted">Los registros que aparecen abajo pertenecen únicamente a esta tanda.</p></div><button class="btn red" id="delete-tanda-btn">Eliminar tanda</button></div>
 <div class="grid"><div class="field"><label for="tanda-name">Nombre o número de tanda</label><input id="tanda-name" placeholder="Tanda 1"></div><div class="field"><label for="general-amount">Monto por integrante ($ MXN)</label><input id="general-amount" type="number" min="0" step="0.01" placeholder="500"></div><div class="field"><label for="start-date">Fecha inicial</label><input id="start-date" type="date"></div><div class="field"><label for="end-date">Fecha final</label><input id="end-date" type="date"></div><div class="field"><label for="frequency">Frecuencia</label><select id="frequency"><option>Semanal</option><option>Quincenal</option><option>Mensual</option></select></div></div><button class="btn mint" id="save-tanda-btn">Guardar datos de tanda</button></div>
 <div class="card"><h2>💗 Agregar o editar integrante</h2><form id="participant-form"><input id="participant-id" type="hidden"><div class="grid"><div class="field"><label for="p-name">Nombre</label><input id="p-name" required placeholder="Nombre del integrante"></div><div class="field"><label for="p-phone">Teléfono</label><input id="p-phone" required type="tel" placeholder="Teléfono"></div><div class="field"><label for="p-account">Número de cuenta (opcional)</label><input id="p-account" placeholder="Cuenta"></div><div class="field"><label for="p-amount">Monto a pagar ($)</label><input id="p-amount" type="number" min="0" step="0.01" required></div><div class="field"><label for="p-date">Fecha de pago</label><input id="p-date" type="date" required></div><div class="field"><label for="p-turn">Número de turno</label><input id="p-turn" type="number" min="1" required></div><div class="field"><label for="p-status">Estado</label><select id="p-status"><option>Pendiente</option><option>Pagado</option><option>Atrasado</option></select></div></div><button class="btn" type="submit" id="add-person-btn">＋ Agregar integrante</button><button class="btn lilac" type="button" id="clear-person-btn">Limpiar formulario</button></form></div>
-<div class="card"><div class="topline"><h2>🧸 Integrantes de esta tanda</h2><span id="member-count" class="pill">0 integrantes</span></div><div class="table-wrap"><table><thead><tr><th>No.</th><th>Nombre</th><th>Teléfono</th><th>Cuenta</th><th>Monto</th><th>Fecha</th><th>Turno</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="participants-list"></tbody></table></div><p id="empty-members" class="muted">Agrega el primer integrante.</p></div>
+<div class="card"><div class="topline"><h2>🐼 Integrantes de esta tanda</h2><span id="member-count" class="pill">0 integrantes</span></div><div class="table-wrap"><table><thead><tr><th>No.</th><th>Nombre</th><th>Teléfono</th><th>Cuenta</th><th>Monto</th><th>Fecha</th><th>Turno</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="participants-list"></tbody></table></div><p id="empty-members" class="muted">Agrega el primer integrante.</p></div>
 <div class="card"><div class="topline"><div><h2>📅 Calendario de pagos</h2><p class="muted">Marca una casilla cuando recibas cada pago. Cada tanda tiene su propio calendario.</p></div><button class="btn sky" id="add-payment-btn">＋ Agregar pago</button></div><div class="table-wrap"><table><thead id="calendar-head"></thead><tbody id="calendar-body"></tbody></table></div></div>
 <div class="card"><h2>🌸 Resumen de esta tanda</h2><div class="stats"><div class="stat"><span>Integrantes</span><b id="s-members">0</b></div><div class="stat"><span>Total esperado</span><b id="s-expected">$0.00</b></div><div class="stat"><span>Pagos marcados</span><b id="s-paid">0</b></div><div class="stat"><span>Pagos pendientes</span><b id="s-pending">0</b></div><div class="stat"><span>Integrantes atrasados</span><b id="s-late">0</b></div></div><p><b>Próximo pago:</b> <span id="s-next-date">—</span></p><p><b>Próximo turno:</b> <span id="s-next-turn">—</span></p><button class="btn mint" id="share-btn">Compartir esta tanda por WhatsApp</button><button class="btn yellow" id="export-btn">Descargar respaldo de esta tanda</button></div>
 </section><div id="app-message" class="message hidden" aria-live="polite"></div></section>
