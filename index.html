@@ -5,7 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ff93b9">
 <title>Tanda Kawaii</title>
-<style>
+/* Barra compacta de planes después de activar */
+.plan-mini-bar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:6px;
+  padding:8px;
+  margin:8px 0;
+  background:#fff;
+  border:1px solid #f5d7e5;
+  border-radius:16px;
+}
+.plan-mini-bar .btn{
+  font-size:.82rem;
+  padding:8px 11px;
+  margin:0;
+}
+  <style>
 :root{--ink:#5a4164;--pink:#ff93b9;--lilac:#bca5ed;--mint:#90ddc5;--sky:#a9dcf5;--cream:#fffaf1;--yellow:#ffe58a}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background-color:var(--cream);background-image:radial-gradient(circle at 15px 15px,rgba(255,147,185,.18) 2px,transparent 2.6px);background-size:34px 34px}
 .hero{padding:26px 16px;text-align:center;background:linear-gradient(110deg,#ffb1cb,#d8b8f5,#a7dcf4)}h1,h2,h3{margin:.2em 0;font-weight:800}.hero h1{font-size:2rem}.hero p{margin:.4em 0}.wrap{max-width:1100px;margin:auto;padding:18px 14px 45px}.card{background:#fff;border:2px solid #fff;border-radius:22px;padding:17px;margin:14px 0;box-shadow:0 8px 24px #8e63821a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.field{margin:10px 0}.field label{display:block;font-weight:700;margin-bottom:5px}.field input,.field select{width:100%;padding:12px;border:2px solid #f5d7e5;border-radius:13px;background:#fffdfd;color:var(--ink);font-size:1rem}.btn{border:0;border-radius:14px;padding:11px 15px;font-weight:800;background:var(--pink);color:#713e59;cursor:pointer;margin:4px 3px 4px 0}.btn.lilac{background:var(--lilac)}.btn.mint{background:var(--mint)}.btn.sky{background:var(--sky)}.btn.yellow{background:var(--yellow)}.btn.red{background:#ffe0e9;color:#9d315c}.btn:disabled{opacity:.55}.muted{color:#967e91;font-size:.92rem}.hidden{display:none!important}.tanda-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.tanda-card{border:2px solid #f6d8e6;background:#fff8fc;border-radius:20px;padding:16px;text-align:left;cursor:pointer;color:var(--ink)}.tanda-card strong{display:block;font-size:1.2rem}.pill{display:inline-block;background:#f2eaff;border-radius:99px;padding:4px 9px;font-size:.8rem;margin-top:6px}.topline{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}.stat{background:#fff3f8;border-radius:16px;padding:13px}.stat:nth-child(2){background:#f4efff}.stat:nth-child(3){background:#ecfff7}.stat:nth-child(4){background:#fff9df}.stat:nth-child(5){background:#eef8ff}.stat span{display:block;font-size:.88rem}.stat b{display:block;font-size:1.25rem;margin-top:5px}table{border-collapse:collapse;width:100%;min-width:780px}th,td{padding:10px;border-bottom:1px solid #f2dce7;text-align:left}th{background:#fff1f7;color:#94677f}td button{margin:0}.table-wrap{overflow-x:auto;max-width:100%;border-radius:13px}.members-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;font-weight:800;font-size:1.15rem;padding:5px 0}.members-summary::-webkit-details-marker{display:none}.members-summary:after{content:"＋";color:#b54c7d;font-size:1.25rem}.members-summary .pill{flex-shrink:0}.member-table{margin-top:12px}.check{width:22px;height:22px;accent-color:#f278a4}.check.received{accent-color:#29a879}.check.delivered{accent-color:#398bd4}.calendar-cell{min-width:118px}.calendar-date{display:block;font-size:.78rem;font-weight:600;color:#785b76;margin-bottom:7px}.checkline{display:flex;align-items:center;gap:5px;margin:5px 0;font-size:.78rem;white-space:nowrap}.checkline.received-line{color:#217d5a}.checkline.delivered-line{color:#276ba6}.calendar-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.legend-chip{padding:6px 10px;border-radius:99px;font-size:.82rem}.legend-received{background:#dcf7e9;color:#217d5a}.legend-delivered{background:#deefff;color:#276ba6}.legend-pending{background:#fff3cc;color:#856000}.message{padding:12px;border-radius:12px;margin:12px 0;background:#effff7;border:1px solid #a9ddc8}.message.error{background:#fff0f5;border-color:#eaa0bb;color:#a74169}.small{font-size:.85rem}.remember{display:flex;gap:9px;align-items:flex-start;margin:12px 0;color:#785e78;font-size:.94rem}.remember input{width:20px;height:20px;accent-color:#f278a4;flex-shrink:0;margin-top:2px}@media(max-width:520px){.hero h1{font-size:1.7rem}.card{padding:13px}.btn{padding:10px 12px}.calendar-cell{min-width:145px}.checkline{white-space:normal;line-height:1.25}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:last-child{grid-column:1/-1}}
@@ -18,7 +36,29 @@
 <button type="button" id="legal-info-button" class="legal-info-button">ⓘ Información / aviso legal</button>
 <header class="hero"><div style="font-size:25px">🍓 🎀🐼 ☁️</div><h1>Tanda Kawaii</h1><p>Sistema kawaii para organizar pagos y turnos</p></header>
 <main class="wrap">
-<!-- INICIO: BOTONES DE COMPRA TANDA KAWAII -->
+<nav id="selected-plan-bar" class="plan-mini-bar hidden"
+     aria-label="Opciones de planes">
+  <button type="button" class="btn lilac" id="toggle-plans-btn">
+    🌸 Ver planes
+  </button>
+
+  <a class="btn" href="https://mpago.la/1JpR5Zk"
+     target="_blank" rel="noopener noreferrer"
+     style="text-decoration:none">
+    🐼 Trimestral
+  </a>
+
+  <a class="btn sky" href="https://mpago.la/2STaruo"
+     target="_blank" rel="noopener noreferrer"
+     style="text-decoration:none">
+    🥝 Anual
+  </a>
+
+  <button type="button" class="btn mint" id="my-tandas-btn">
+    💗 Mis tandas
+  </button>
+</nav>
+  <!-- INICIO: BOTONES DE COMPRA TANDA KAWAII -->
 <section id="tanda-buy-plans" class="card" style="margin-bottom:18px;">
   <h2>🌸 Elige tu plan Kawaii</h2>
   <p class="muted">Compra tu licencia y organiza tus tandas con amor.</p>
@@ -98,7 +138,8 @@ function parsePlan(response){
  if(maxT===null||maxT===undefined||maxT===''||!Number.isFinite(Number(maxT))||Number(maxT)<=0)maxT=/trimes|quarter/.test(name)?5:/gratis|demo|free/.test(name)?1:9999;else maxT=Number(maxT);
  if(maxP===null||maxP===undefined||maxP===''||!Number.isFinite(Number(maxP))||Number(maxP)<=0)maxP=/trimes|quarter/.test(name)?20:/gratis|demo|free/.test(name)?3:9999;else maxP=Number(maxP);
  return{id:name,name:p.nombre||p.plan||p.tipo_plan||(name==='gratis'?'Prueba gratis':name==='trimestral'?'Trimestral':name==='anual'?'Anual':'Licencia activa'),maxTandas:maxT,maxIntegrantes:maxP,expiresAt:p.fechaFin||p.fecha_vencimiento||p.expires_at||p.expira||''}
-}
+}$('tanda-buy-plans').classList.add('hidden');
+$('selected-plan-bar').classList.remove('hidden');
 function showApp(){loadDb();$('license-panel').classList.add('hidden');$('app-panel').classList.remove('hidden');$('plan-info').textContent='Plan: '+plan.name+(plan.expiresAt?' · Vence: '+new Date(plan.expiresAt).toLocaleDateString('es-MX'):'')+' · Límite: '+(plan.maxTandas>=9999?'sin límite':plan.maxTandas+' tandas')+' · '+(plan.maxIntegrantes>=9999?'sin límite':plan.maxIntegrantes+' integrantes por tanda');renderTandas();
 licenseMsg(plan.id==='gratis'
   ?'Prueba gratis activa. Tienes 7 días para disfrutar Tanda Kawaii.'
@@ -261,7 +302,25 @@ $('remove-payment-btn').addEventListener('click',removePayment);
 $('share-btn').addEventListener('click',share);
 $('export-btn').addEventListener('click',exportTanda);
 $('delete-tanda-btn').addEventListener('click',deleteTanda);
+$('toggle-plans-btn').addEventListener('click',()=>{
+  const plans=$('tanda-buy-plans');
 
+  plans.classList.toggle('hidden');
+
+  if(!plans.classList.contains('hidden')){
+    plans.scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+  }
+});
+
+$('my-tandas-btn').addEventListener('click',()=>{
+  $('app-panel').scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+});
 const freeTrialButton = $('start-free-trial');
 
 if(freeTrialButton){
