@@ -239,43 +239,102 @@ function removePayment(){const t=active();if(!t)return;const count=Number(t.paym
 function share(){const t=active();if(!t)return;normalizeMovements(t);const ps=t.integrantes,checks=ps.reduce((n,p)=>n+p.movimientos.slice(0,t.paymentColumns||1).filter(m=>m.recibido).length,0),deliveries=ps.reduce((n,p)=>n+p.movimientos.slice(0,t.paymentColumns||1).filter(m=>m.entregado).length,0),text=['🎀 *Reporte · Tanda Kawaii*',`💗 Tanda: ${t.nombre}`,`💰 Monto por integrante: ${money(t.monto)}`,`🌸 Frecuencia: ${t.frecuencia}`,`📅 Periodo: ${t.inicio||'—'} al ${t.fin||'—'}`,`👥 Integrantes: ${ps.length}`,`✅ Aportaciones recibidas: ${checks}`,`○ Aportaciones pendientes: ${Math.max(0,ps.length*(t.paymentColumns||1)-checks)}`,`💙 Entregas de turno registradas: ${deliveries}`,`○ Entregas pendientes: ${Math.max(0,ps.length*(t.paymentColumns||1)-deliveries)}`,`★ Atrasados: ${ps.filter(p=>p.estado==='Atrasado').length}`].join('\n');location.href='https://wa.me/?text='+encodeURIComponent(text)}
 function exportTanda(){const t=active();if(!t)return;const blob=new Blob([JSON.stringify(t,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(t.nombre||'tanda').replace(/[^a-z0-9_-]/gi,'_')+'_respaldo.json';a.click();URL.revokeObjectURL(url);message('Respaldo descargado. Guárdalo en un lugar seguro.')}
 function deleteTanda(){const t=active();if(!t)return;if(!confirm(`¿Eliminar ${t.nombre} y todos sus registros? Descarga un respaldo antes si los necesitas.`))return;db.tandas=db.tandas.filter(x=>x.id!==activeId);activeId=null;saveDb();$('detail-panel').classList.add('hidden');renderTandas();message('Tanda eliminada.')}
-$('activate-btn').addEventListener('click',()=>activate());$('license-key').addEventListener('keydown',e=>{if(e.key==='Enter')activate()});$('remember-license').addEventListener('change',()=>{if(!$('remember-license').checked)localStorage.removeItem(REMEMBER_KEY)});$('new-tanda-btn').addEventListener('click',newTanda);$('back-btn').addEventListener('click',back);$('save-tanda-btn').addEventListener('click',saveTanda);$('participant-form').addEventListener('submit',submitPerson);$('clear-person-btn').addEventListener('click',clearPerson);$('add-payment-btn').addEventListener('click',addPayment);$('remove-payment-btn').addEventListener('click',removePayment);$('share-btn').addEventListener('click',share);$('export-btn').addEventListener('click',exportTanda);$('delete-tanda-btn').addEventListener('click',deleteTanda);
-const freeTrialButton=$('start-free-trial');
+$('activate-btn').addEventListener('click',()=>activate());
+
+$('license-key').addEventListener('keydown',e=>{
+  if(e.key==='Enter') activate();
+});
+
+$('remember-license').addEventListener('change',()=>{
+  if(!$('remember-license').checked){
+    localStorage.removeItem(REMEMBER_KEY);
+  }
+});
+
+$('new-tanda-btn').addEventListener('click',newTanda);
+$('back-btn').addEventListener('click',back);
+$('save-tanda-btn').addEventListener('click',saveTanda);
+$('participant-form').addEventListener('submit',submitPerson);
+$('clear-person-btn').addEventListener('click',clearPerson);
+$('add-payment-btn').addEventListener('click',addPayment);
+$('remove-payment-btn').addEventListener('click',removePayment);
+$('share-btn').addEventListener('click',share);
+$('export-btn').addEventListener('click',exportTanda);
+$('delete-tanda-btn').addEventListener('click',deleteTanda);
+
+const freeTrialButton = $('start-free-trial');
+
 if(freeTrialButton){
   freeTrialButton.addEventListener('click',startFreeTrial);
 }
-let legalViewOnly=false;
-function openLegalInfo(){legalViewOnly=localStorage.getItem('tandaKawaii_legal_accepted_v2')==='yes';$('legal-title').textContent=legalViewOnly?'Información y términos legales':'Antes de comenzar';$('legal-check').checked=legalViewOnly;$('legal-continue').disabled=legalViewOnly?false:true;$('legal-accept-row').classList.toggle('hidden',legalViewOnly);$('legal-continue').textContent=legalViewOnly?'Cerrar términos':'💗 Aceptar y continuar';$('legal-status-note').classList.toggle('hidden',!legalViewOnly);$('legal-modal').classList.remove('hidden')}
 
-$('legal-info-button').addEventListener('click', openLegalInfo);
+let legalViewOnly = false;
 
-$('legal-check').addEventListener('change', () => {
-  $('legal-continue').disabled = !$('legal-check').checked;
+function openLegalInfo(){
+  legalViewOnly =
+    localStorage.getItem('tandaKawaii_legal_accepted_v2') === 'yes';
+
+  $('legal-title').textContent = legalViewOnly
+    ? 'Información y términos legales'
+    : 'Antes de comenzar';
+
+  $('legal-check').checked = legalViewOnly;
+  $('legal-continue').disabled = !legalViewOnly;
+
+  $('legal-accept-row').classList.toggle(
+    'hidden',
+    legalViewOnly
+  );
+
+  $('legal-continue').textContent = legalViewOnly
+    ? 'Cerrar términos'
+    : '💗 Aceptar y continuar';
+
+  $('legal-status-note').classList.toggle(
+    'hidden',
+    !legalViewOnly
+  );
+
+  $('legal-modal').classList.remove('hidden');
+}
+
+$('legal-info-button').addEventListener(
+  'click',
+  openLegalInfo
+);
+
+$('legal-check').addEventListener('change',()=>{
+  $('legal-continue').disabled =
+    !$('legal-check').checked;
 });
 
-$('legal-continue').addEventListener('click', () => {
-  if (legalViewOnly) {
+$('legal-continue').addEventListener('click',()=>{
+  if(legalViewOnly){
     $('legal-modal').classList.add('hidden');
     return;
   }
 
-  if (!$('legal-check').checked) {
+  if(!$('legal-check').checked){
     return;
   }
 
-  localStorage.setItem('tandaKawaii_legal_accepted_v2', 'yes');
+  localStorage.setItem(
+    'tandaKawaii_legal_accepted_v2',
+    'yes'
+  );
+
   $('legal-modal').classList.add('hidden');
 
   const remembered = localStorage.getItem(REMEMBER_KEY);
 
-  if (remembered) {
+  if(remembered){
     $('license-key').value = remembered;
     $('remember-license').checked = true;
     activate(remembered);
-  } else {
+  }else{
     $('tanda-buy-plans').scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
+      behavior:'smooth',
+      block:'start'
     });
 
     licenseMsg(
@@ -284,6 +343,34 @@ $('legal-continue').addEventListener('click', () => {
   }
 });
 
+/* INICIALIZACIÓN DE TANDA KAWAII */
+
+const remembered = localStorage.getItem(REMEMBER_KEY);
+
+if(remembered){
+  $('license-key').value = remembered;
+  $('remember-license').checked = true;
+}
+
+if(
+  localStorage.getItem('tandaKawaii_legal_accepted_v2') === 'yes'
+){
+  if(remembered){
+    activate(remembered);
+  }
+}else{
+  $('legal-title').textContent = 'Antes de comenzar';
+  $('legal-check').checked = false;
+  $('legal-continue').disabled = true;
+  $('legal-accept-row').classList.remove('hidden');
+  $('legal-continue').textContent = '💗 Aceptar y continuar';
+  $('legal-status-note').classList.add('hidden');
+  $('legal-modal').classList.remove('hidden');
+}
+
+setInterval(lockExpiredFreeTrial,1000);
+
+})();
 </script>
 </body>
 </html>
