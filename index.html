@@ -163,6 +163,41 @@ function startFreeTrial(){
   showApp();
 }
 
+function lockExpiredFreeTrial(){
+  if(licenseKey !== 'PRUEBA-GRATIS') return;
+
+  let trial = null;
+
+  try{
+    trial = JSON.parse(
+      localStorage.getItem(FREE_TRIAL_KEY) || 'null'
+    );
+  }catch(e){
+    trial = null;
+  }
+
+  if(
+    trial &&
+    Number(trial.expiresAt) > Date.now()
+  ){
+    return;
+  }
+
+  licenseKey = '';
+  plan = null;
+  activeId = null;
+
+  $('detail-panel').classList.add('hidden');
+  $('app-panel').classList.add('hidden');
+  $('license-panel').classList.remove('hidden');
+  $('license-key').value = '';
+
+  licenseMsg(
+    'Tu prueba gratis terminó. Activa una licencia para continuar.',
+    true
+  );
+}
+
 function makeId(){return 't'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}function active(){return db.tandas.find(t=>t.id===activeId)}
 function renderTandas(){const list=$('tanda-list');list.replaceChildren();$('no-tandas').classList.toggle('hidden',db.tandas.length>0);db.tandas.forEach((t,i)=>{const b=document.createElement('button');b.className='tanda-card';b.type='button';const title=document.createElement('strong');title.textContent='🎀 '+(t.nombre||`Tanda ${i+1}`);const detail=document.createElement('span');detail.textContent=`${t.integrantes.length} integrantes · ${money(t.monto)}`;detail.className='muted';const pill=document.createElement('span');pill.className='pill';pill.textContent='Tocar para abrir';b.append(title,detail,document.createElement('br'),pill);b.onclick=()=>openTanda(t.id);list.appendChild(b)})}
 function dateAtNoon(value){return value?new Date(value+'T12:00:00'):null}
@@ -216,6 +251,7 @@ $('legal-check').addEventListener('change',()=>{$('legal-continue').disabled=!$(
 $('legal-continue').addEventListener('click',()=>{if(legalViewOnly){$('legal-modal').classList.add('hidden');return}if(!$('legal-check').checked)return;localStorage.setItem('tandaKawaii_legal_accepted_v2','yes');$('legal-modal').classList.add('hidden');const remembered=localStorage.getItem(REMEMBER_KEY);if(remembered){$('license-key').value=remembered;$('remember-license').checked=true;activate(remembered)}else{$('license-key').focus()}});
 const remembered=localStorage.getItem(REMEMBER_KEY);if(remembered){$('license-key').value=remembered;$('remember-license').checked=true}
 if(localStorage.getItem('tandaKawaii_legal_accepted_v2')==='yes'){if(remembered)activate(remembered)}else{$('legal-title').textContent='Antes de comenzar';$('legal-check').checked=false;$('legal-continue').disabled=true;$('legal-accept-row').classList.remove('hidden');$('legal-continue').textContent='💗 Aceptar y continuar';$('legal-status-note').classList.add('hidden');$('legal-modal').classList.remove('hidden')}
+setInterval(lockExpiredFreeTrial, 1000);
 })();
 </script>
 </body>
