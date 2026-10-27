@@ -246,13 +246,44 @@ if(freeTrialButton){
 }
 let legalViewOnly=false;
 function openLegalInfo(){legalViewOnly=localStorage.getItem('tandaKawaii_legal_accepted_v2')==='yes';$('legal-title').textContent=legalViewOnly?'Información y términos legales':'Antes de comenzar';$('legal-check').checked=legalViewOnly;$('legal-continue').disabled=legalViewOnly?false:true;$('legal-accept-row').classList.toggle('hidden',legalViewOnly);$('legal-continue').textContent=legalViewOnly?'Cerrar términos':'💗 Aceptar y continuar';$('legal-status-note').classList.toggle('hidden',!legalViewOnly);$('legal-modal').classList.remove('hidden')}
-$('legal-info-button').addEventListener('click',openLegalInfo);
-$('legal-check').addEventListener('change',()=>{$('legal-continue').disabled=!$('legal-check').checked});
-$('legal-continue').addEventListener('click',()=>{if(legalViewOnly){$('legal-modal').classList.add('hidden');return}if(!$('legal-check').checked)return;localStorage.setItem('tandaKawaii_legal_accepted_v2','yes');$('legal-modal').classList.add('hidden');const remembered=localStorage.getItem(REMEMBER_KEY);if(remembered){$('license-key').value=remembered;$('remember-license').checked=true;activate(remembered)}else{$('license-key').focus()}});
-const remembered=localStorage.getItem(REMEMBER_KEY);if(remembered){$('license-key').value=remembered;$('remember-license').checked=true}
-if(localStorage.getItem('tandaKawaii_legal_accepted_v2')==='yes'){if(remembered)activate(remembered)}else{$('legal-title').textContent='Antes de comenzar';$('legal-check').checked=false;$('legal-continue').disabled=true;$('legal-accept-row').classList.remove('hidden');$('legal-continue').textContent='💗 Aceptar y continuar';$('legal-status-note').classList.add('hidden');$('legal-modal').classList.remove('hidden')}
-setInterval(lockExpiredFreeTrial, 1000);
-})();
+
+$('legal-info-button').addEventListener('click', openLegalInfo);
+
+$('legal-check').addEventListener('change', () => {
+  $('legal-continue').disabled = !$('legal-check').checked;
+});
+
+$('legal-continue').addEventListener('click', () => {
+  if (legalViewOnly) {
+    $('legal-modal').classList.add('hidden');
+    return;
+  }
+
+  if (!$('legal-check').checked) {
+    return;
+  }
+
+  localStorage.setItem('tandaKawaii_legal_accepted_v2', 'yes');
+  $('legal-modal').classList.add('hidden');
+
+  const remembered = localStorage.getItem(REMEMBER_KEY);
+
+  if (remembered) {
+    $('license-key').value = remembered;
+    $('remember-license').checked = true;
+    activate(remembered);
+  } else {
+    $('tanda-buy-plans').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+
+    licenseMsg(
+      'Aviso legal aceptado. Elige tu prueba gratis o activa una licencia.'
+    );
+  }
+});
+
 </script>
 </body>
 </html>
