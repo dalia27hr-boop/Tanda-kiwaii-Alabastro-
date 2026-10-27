@@ -102,7 +102,7 @@ function parsePlan(response){
 function showApp(){loadDb();$('license-panel').classList.add('hidden');$('app-panel').classList.remove('hidden');$('plan-info').textContent='Plan: '+plan.name+(plan.expiresAt?' · Vence: '+new Date(plan.expiresAt).toLocaleDateString('es-MX'):'')+' · Límite: '+(plan.maxTandas>=9999?'sin límite':plan.maxTandas+' tandas')+' · '+(plan.maxIntegrantes>=9999?'sin límite':plan.maxIntegrantes+' integrantes por tanda');renderTandas();
 licenseMsg(plan.id==='gratis'
   ?'Prueba gratis activa. Tienes 7 días para disfrutar Tanda Kawaii.'
-  :'Licencia activa y comprobada con Cloudflare.')
+  :'Licencia activa y comprobada con Cloudflare.')} 
 
 async function activate(savedKey=null){
  if(localStorage.getItem('tandaKawaii_legal_accepted_v2')!=='yes'){openLegalInfo();licenseMsg('Primero lee y acepta el aviso legal para continuar.',true);return}
@@ -155,7 +155,7 @@ function startFreeTrial(){
   plan={
     id:'gratis',
     name:'Prueba gratis',
-    maxTandas:1
+    maxTandas:1, 
     maxIntegrantes:3,
     expiresAt:new Date(Number(trial.expiresAt)).toISOString()
   };
