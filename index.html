@@ -84,6 +84,7 @@
 const API='https://tanda-licencias.dalia27hr.workers.dev';
 const $=id=>document.getElementById(id), money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0), today=()=>new Date().toISOString().slice(0,10);
 const REMEMBER_KEY='tandaKawaii_remembered_license_v1';
+const FREE_TRIAL_KEY='tandaKawaii_free_trial_v1';
 let licenseKey='',plan={id:'',name:'',maxTandas:1,maxIntegrantes:3,expiresAt:''},db={tandas:[]},activeId=null;
 function message(text,error=false){const e=$('app-message');e.textContent=text;e.className='message'+(error?' error':'');e.classList.remove('hidden')}
 function licenseMsg(text,error=false){$('license-status').textContent=text;$('license-status').style.color=error?'#a74169':'#6b947e'}
@@ -98,7 +99,11 @@ function parsePlan(response){
  if(maxP===null||maxP===undefined||maxP===''||!Number.isFinite(Number(maxP))||Number(maxP)<=0)maxP=/trimes|quarter/.test(name)?20:/gratis|demo|free/.test(name)?3:9999;else maxP=Number(maxP);
  return{id:name,name:p.nombre||p.plan||p.tipo_plan||(name==='gratis'?'Prueba gratis':name==='trimestral'?'Trimestral':name==='anual'?'Anual':'Licencia activa'),maxTandas:maxT,maxIntegrantes:maxP,expiresAt:p.fechaFin||p.fecha_vencimiento||p.expires_at||p.expira||''}
 }
-function showApp(){loadDb();$('license-panel').classList.add('hidden');$('app-panel').classList.remove('hidden');$('plan-info').textContent='Plan: '+plan.name+(plan.expiresAt?' · Vence: '+new Date(plan.expiresAt).toLocaleDateString('es-MX'):'')+' · Límite: '+(plan.maxTandas>=9999?'sin límite':plan.maxTandas+' tandas')+' · '+(plan.maxIntegrantes>=9999?'sin límite':plan.maxIntegrantes+' integrantes por tanda');renderTandas();licenseMsg('Licencia activa y comprobada con Cloudflare.')}
+function showApp(){loadDb();$('license-panel').classList.add('hidden');$('app-panel').classList.remove('hidden');$('plan-info').textContent='Plan: '+plan.name+(plan.expiresAt?' · Vence: '+new Date(plan.expiresAt).toLocaleDateString('es-MX'):'')+' · Límite: '+(plan.maxTandas>=9999?'sin límite':plan.maxTandas+' tandas')+' · '+(plan.maxIntegrantes>=9999?'sin límite':plan.maxIntegrantes+' integrantes por tanda');renderTandas();
+licenseMsg(plan.id==='gratis'
+  ?'Prueba gratis activa. Tienes 7 días para disfrutar Tanda Kawaii.'
+  :'Licencia activa y comprobada con Cloudflare.')
+
 async function activate(savedKey=null){
  if(localStorage.getItem('tandaKawaii_legal_accepted_v2')!=='yes'){openLegalInfo();licenseMsg('Primero lee y acepta el aviso legal para continuar.',true);return}
  const key=(savedKey||$('license-key').value).trim();if(!key){licenseMsg('Escribe tu clave de licencia.',true);return}
@@ -118,6 +123,46 @@ async function activate(savedKey=null){
   licenseMsg('No se pudo activar: '+e.message,true)
  }finally{btn.disabled=false}
 }
+function startFreeTrial(){
+  if(localStorage.getItem('tandaKawaii_legal_accepted_v2')!=='yes'){
+    openLegalInfo();
+    licenseMsg('Primero lee y acepta el aviso legal para continuar.',true);
+    return;
+  }
+
+  let trial=null;
+
+  try{
+    trial=JSON.parse(localStorage.getItem(FREE_TRIAL_KEY)||'null');
+  }catch(e){
+    trial=null;
+  }
+
+  if(!trial){
+    trial={
+      startedAt:Date.now(),
+      expiresAt:Date.now()+(7*24*60*60*1000)
+    };
+    localStorage.setItem(FREE_TRIAL_KEY,JSON.stringify(trial));
+  }
+
+  if(!trial.expiresAt||Date.now()>=Number(trial.expiresAt)){
+    licenseMsg('Tu prueba gratis terminó. Elige un plan de pago para continuar.',true);
+    return;
+  }
+
+  licenseKey='PRUEBA-GRATIS';
+  plan={
+    id:'gratis',
+    name:'Prueba gratis',
+    maxTandas:1
+    maxIntegrantes:3,
+    expiresAt:new Date(Number(trial.expiresAt)).toISOString()
+  };
+
+  showApp();
+}
+
 function makeId(){return 't'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}function active(){return db.tandas.find(t=>t.id===activeId)}
 function renderTandas(){const list=$('tanda-list');list.replaceChildren();$('no-tandas').classList.toggle('hidden',db.tandas.length>0);db.tandas.forEach((t,i)=>{const b=document.createElement('button');b.className='tanda-card';b.type='button';const title=document.createElement('strong');title.textContent='🎀 '+(t.nombre||`Tanda ${i+1}`);const detail=document.createElement('span');detail.textContent=`${t.integrantes.length} integrantes · ${money(t.monto)}`;detail.className='muted';const pill=document.createElement('span');pill.className='pill';pill.textContent='Tocar para abrir';b.append(title,detail,document.createElement('br'),pill);b.onclick=()=>openTanda(t.id);list.appendChild(b)})}
 function dateAtNoon(value){return value?new Date(value+'T12:00:00'):null}
@@ -160,6 +205,10 @@ function share(){const t=active();if(!t)return;normalizeMovements(t);const ps=t.
 function exportTanda(){const t=active();if(!t)return;const blob=new Blob([JSON.stringify(t,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(t.nombre||'tanda').replace(/[^a-z0-9_-]/gi,'_')+'_respaldo.json';a.click();URL.revokeObjectURL(url);message('Respaldo descargado. Guárdalo en un lugar seguro.')}
 function deleteTanda(){const t=active();if(!t)return;if(!confirm(`¿Eliminar ${t.nombre} y todos sus registros? Descarga un respaldo antes si los necesitas.`))return;db.tandas=db.tandas.filter(x=>x.id!==activeId);activeId=null;saveDb();$('detail-panel').classList.add('hidden');renderTandas();message('Tanda eliminada.')}
 $('activate-btn').addEventListener('click',()=>activate());$('license-key').addEventListener('keydown',e=>{if(e.key==='Enter')activate()});$('remember-license').addEventListener('change',()=>{if(!$('remember-license').checked)localStorage.removeItem(REMEMBER_KEY)});$('new-tanda-btn').addEventListener('click',newTanda);$('back-btn').addEventListener('click',back);$('save-tanda-btn').addEventListener('click',saveTanda);$('participant-form').addEventListener('submit',submitPerson);$('clear-person-btn').addEventListener('click',clearPerson);$('add-payment-btn').addEventListener('click',addPayment);$('remove-payment-btn').addEventListener('click',removePayment);$('share-btn').addEventListener('click',share);$('export-btn').addEventListener('click',exportTanda);$('delete-tanda-btn').addEventListener('click',deleteTanda);
+const freeTrialButton=$('start-free-trial');
+if(freeTrialButton){
+  freeTrialButton.addEventListener('click',startFreeTrial);
+}
 let legalViewOnly=false;
 function openLegalInfo(){legalViewOnly=localStorage.getItem('tandaKawaii_legal_accepted_v2')==='yes';$('legal-title').textContent=legalViewOnly?'Información y términos legales':'Antes de comenzar';$('legal-check').checked=legalViewOnly;$('legal-continue').disabled=legalViewOnly?false:true;$('legal-accept-row').classList.toggle('hidden',legalViewOnly);$('legal-continue').textContent=legalViewOnly?'Cerrar términos':'💗 Aceptar y continuar';$('legal-status-note').classList.toggle('hidden',!legalViewOnly);$('legal-modal').classList.remove('hidden')}
 $('legal-info-button').addEventListener('click',openLegalInfo);
