@@ -29,6 +29,30 @@ body:has(#selected-plan-bar:not(.hidden)) main.wrap{padding-top:104px}
 <div id="legal-modal" class="legal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="legal-title"><div class="legal-box"><div style="text-align:center;font-size:36px">🍓 🎀 🌸</div><h2 id="legal-title">Antes de comenzar</h2><p style="text-align:center">Bienvenida a Tanda Kawaii 💗</p><div class="legal-copy"><h3>📋 Aviso legal y condiciones de uso</h3><p>Tanda Kawaii es una herramienta para registrar y organizar aportaciones, pagos y turnos. No recibe, custodia, administra ni garantiza el dinero de las tandas. La organización, cobranza, entrega del dinero y verificación de los pagos son responsabilidad de los usuarios.</p><p>Los usuarios deben acordar previamente las reglas de su tanda y verificar cada pago y entrega antes de marcarlo como realizado. La aplicación no sustituye esos acuerdos ni los comprobantes de pago.</p><h3>🔒 Privacidad</h3><p>Los registros de las tandas están diseñados para guardarse en este dispositivo. La validación de licencia se realiza por separado mediante el servicio de licencias. No registres datos personales de otras personas sin autorización.</p><p>Protege tu celular y descarga respaldos cuando estén disponibles. Los datos podrían perderse si borras el almacenamiento del navegador, desinstalas la aplicación o pierdes el dispositivo.</p><h3>🌷 Uso responsable</h3><p>Usa la aplicación de forma honesta. No marques pagos o entregas que no se hayan realizado ni utilices la app para engañar o suplantar a otras personas.</p></div><label id="legal-accept-row" class="legal-accept"><input id="legal-check" type="checkbox"><span>He leído y acepto el aviso legal y las condiciones de uso.</span></label><button id="legal-continue" class="btn legal-btn" disabled>💗 Aceptar y continuar</button><p id="legal-status-note" class="legal-note hidden">💗 Ya aceptaste el aviso legal al comenzar a usar Tanda Kawaii. Esta ventana permite volver a consultar los términos; abrirla no significa una nueva aceptación.</p><p class="muted small" style="text-align:center">Puedes volver a consultar este aviso desde el botón ⓘ Aviso legal.</p></div></div>
 <button type="button" id="legal-info-button" class="legal-info-button">ⓘ Aviso legal</button>
 <header class="hero"><div style="font-size:25px">🍓🐼🎀☁️</div><h1>Tanda Kawaii</h1><p>Sistema kawaii para organizar pagos y turnos</p></header>
+<section class="wrap" id="language-currency-settings" style="padding-bottom:0">
+  <div class="card" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center">
+    <div class="field" style="flex:1;min-width:140px;margin:0">
+      <label for="language-select">🌐 Idioma</label>
+      <select id="language-select">
+        <option value="es">🇲🇽 Español</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="pt">🇧🇷 Português</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="it">🇮🇹 Italiano</option>
+      </select>
+    </div>
+    <div class="field" style="flex:1;min-width:140px;margin:0">
+      <label for="currency-select">💰 Moneda</label>
+      <select id="currency-select">
+        <option value="MXN">🇲🇽 MXN — Peso mexicano</option>
+        <option value="USD">🇺🇸 USD — Dólar estadounidense</option>
+        <option value="EUR">🇪🇺 EUR — Euro</option>
+        <option value="BRL">🇧🇷 BRL — Real brasileño</option>
+        <option value="COP">🇨🇴 COP — Peso colombiano</option>
+      </select>
+    </div>
+  </div>
+</section>
 <main class="wrap">
 <section id="plans-panel" class="card"><h2>🌈 ☁️ Elige tu plan Kawaii</h2><p class="muted">Compra tu licencia y organiza tus tandas con amor.</p><div class="grid"><div class="card" style="margin:0;background:#fff4f8"><h3>🍓 Prueba gratis</h3><h2>$0 MXN</h2><p>1 mes · 1 tanda · Máximo 4 integrantes</p><button type="button" class="btn" id="free-trial-btn">🍓 Comenzar gratis</button><p class="muted small">La prueba se guarda en este dispositivo.</p></div><div class="card" style="margin:0;background:#f7f1ff"><h3>🐼 Plan Trimestral</h3><h2>$87 MXN</h2><p>3 meses · Hasta 5 tandas · 12 integrantes por tanda</p><button type="button" class="btn lilac" id="buy-quarterly-btn">💗 🐼 Comprar plan trimestral</button></div><div class="card" style="margin:0;background:#f0fbff"><h3>🥝 Plan Anual</h3><h2>$299 MXN</h2><p>1 año · Plan ilimitado</p><button type="button" class="btn sky" id="buy-annual-btn">✨ Comprar plan anual</button></div></div></section><div id="selected-plan-bar" class="card hidden"><div class="topline"><span id="active-plan-label">Plan activo</span><button type="button" class="btn lilac" id="show-plans-btn" aria-label="Mostrar planes">✨ Planes</button><button type="button" class="btn mint" id="my-tandas-btn" aria-label="Mostrar mis tandas">🌷 Mis tandas</button></div></div>
 <section id="license-panel" class="card">
@@ -111,7 +135,43 @@ body:has(#selected-plan-bar:not(.hidden)) main.wrap{padding-top:104px}
 <script>
 (()=>{'use strict';
 const API='https://tanda-licencias.dalia27hr.workers.dev';
-const $=id=>document.getElementById(id), money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0), today=()=>new Date().toISOString().slice(0,10);
+
+const $=id=>document.getElementById(id);
+const CURRENCY_KEY='tandaKawaii_currency_v1';
+const LOCALE_KEY='tandaKawaii_language_v1';
+const currencyLocales={MXN:'es-MX',USD:'en-US',EUR:'fr-FR',BRL:'pt-BR',COP:'es-CO'};
+let selectedCurrency=localStorage.getItem(CURRENCY_KEY)||'MXN';
+let selectedLanguage=localStorage.getItem(LOCALE_KEY)||'es';
+
+function money(n){
+  return new Intl.NumberFormat(
+    currencyLocales[selectedCurrency]||'es-MX',
+    {style:'currency',currency:selectedCurrency}
+  ).format(Number(n)||0);
+}
+
+function today(){
+  return new Date().toISOString().slice(0,10);
+}
+
+const currencySelect=$('currency-select');
+const languageSelect=$('language-select');
+
+currencySelect.value=selectedCurrency;
+languageSelect.value=selectedLanguage;
+
+currencySelect.addEventListener('change',()=>{
+  selectedCurrency=currencySelect.value;
+  localStorage.setItem(CURRENCY_KEY,selectedCurrency);
+  renderTandas();
+  if(activeId)renderDetail();
+});
+
+languageSelect.addEventListener('change',()=>{
+  selectedLanguage=languageSelect.value;
+  localStorage.setItem(LOCALE_KEY,selectedLanguage);
+});
+
 const REMEMBER_KEY='tandaKawaii_remembered_license_v1';
 let licenseKey='',plan={id:'',name:'',maxTandas:1,maxIntegrantes:3,expiresAt:''},db={tandas:[]},activeId=null;
 function message(text,error=false){const e=$('app-message');e.textContent=text;e.className='message'+(error?' error':'');e.classList.remove('hidden')}
