@@ -166,11 +166,188 @@ currencySelect.addEventListener('change',()=>{
   renderTandas();
   if(activeId)renderDetail();
 });
+const translations = {
+  en: {
+    'Idioma': 'Language',
+    'Moneda': 'Currency',
+    'Sistema kawaii para organizar pagos y turnos': 'Kawaii system to organize payments and turns',
+    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Choose your Kawaii plan',
+    'Compra tu licencia y organiza tus tandas con amor.': 'Buy your license and organize your savings groups with love.',
+    '🍓 Prueba gratis': '🍓 Free trial',
+    '🐼 Plan Trimestral': '🐼 Quarterly Plan',
+    '🥝 Plan Anual': '🥝 Annual Plan',
+    '🍓 Comenzar gratis': '🍓 Start free trial',
+    '🔐 Activar licencia': '🔐 Activate license',
+    'Clave de licencia': 'License key',
+    '🌸 Mis tandas': '🌸 My groups',
+    '＋ Crear tanda': '＋ Create group',
+    'Nombre': 'Name',
+    'Teléfono': 'Phone',
+    'Frecuencia': 'Frequency',
+    'Semanal': 'Weekly',
+    'Quincenal': 'Every two weeks',
+    'Mensual': 'Monthly',
+    'Guardar datos de tanda': 'Save group details',
+    'Calendario de pagos': 'Payment calendar',
+    'Integrantes': 'Participants',
+    'Pagos pendientes': 'Pending payments',
+    'Editar': 'Edit',
+    'Borrar': 'Delete',
+    'Cancelar': 'Cancel',
+    'Enviar correo': 'Send email',
+    '🚀✨ Contacto y soporte': '🚀✨ Contact and support'
+  },
+  pt: {
+    'Idioma': 'Idioma',
+    'Moneda': 'Moeda',
+    'Sistema kawaii para organizar pagos y turnos': 'Sistema kawaii para organizar pagamentos e turnos',
+    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Escolha seu plano Kawaii',
+    'Compra tu licencia y organiza tus tandas con amor.': 'Compre sua licença e organize seus grupos com carinho.',
+    '🍓 Prueba gratis': '🍓 Teste grátis',
+    '🐼 Plan Trimestral': '🐼 Plano trimestral',
+    '🥝 Plan Anual': '🥝 Plano anual',
+    '🍓 Comenzar gratis': '🍓 Começar grátis',
+    '🔐 Activar licencia': '🔐 Ativar licença',
+    'Clave de licencia': 'Chave de licença',
+    '🌸 Mis tandas': '🌸 Meus grupos',
+    '＋ Crear tanda': '＋ Criar grupo',
+    'Nombre': 'Nome',
+    'Teléfono': 'Telefone',
+    'Frecuencia': 'Frequência',
+    'Semanal': 'Semanal',
+    'Quincenal': 'A cada quinze dias',
+    'Mensual': 'Mensal',
+    'Guardar datos de tanda': 'Salvar dados do grupo',
+    'Calendario de pagos': 'Calendário de pagamentos',
+    'Integrantes': 'Participantes',
+    'Pagos pendientes': 'Pagamentos pendentes',
+    'Editar': 'Editar',
+    'Borrar': 'Excluir',
+    'Cancelar': 'Cancelar',
+    'Enviar correo': 'Enviar e-mail',
+    '🚀✨ Contacto y soporte': '🚀✨ Contato e suporte'
+  },
+  fr: {
+    'Idioma': 'Langue',
+    'Moneda': 'Devise',
+    'Sistema kawaii para organizar pagos y turnos': 'Système kawaii pour organiser les paiements et les tours',
+    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Choisissez votre forfait Kawaii',
+    'Compra tu licencia y organiza tus tandas con amor.': 'Achetez votre licence et organisez vos groupes avec soin.',
+    '🍓 Prueba gratis': '🍓 Essai gratuit',
+    '🐼 Plan Trimestral': '🐼 Forfait trimestriel',
+    '🥝 Plan Anual': '🥝 Forfait annuel',
+    '🍓 Comenzar gratis': '🍓 Commencer gratuitement',
+    '🔐 Activar licencia': '🔐 Activer la licence',
+    'Clave de licencia': 'Clé de licence',
+    '🌸 Mis tandas': '🌸 Mes groupes',
+    '＋ Crear tanda': '＋ Créer un groupe',
+    'Nombre': 'Nom',
+    'Teléfono': 'Téléphone',
+    'Frecuencia': 'Fréquence',
+    'Semanal': 'Hebdomadaire',
+    'Quincenal': 'Toutes les deux semaines',
+    'Mensual': 'Mensuel',
+    'Guardar datos de tanda': 'Enregistrer le groupe',
+    'Calendario de pagos': 'Calendrier des paiements',
+    'Integrantes': 'Membres',
+    'Pagos pendientes': 'Paiements en attente',
+    'Editar': 'Modifier',
+    'Borrar': 'Supprimer',
+    'Cancelar': 'Annuler',
+    'Enviar correo': 'Envoyer un e-mail',
+    '🚀✨ Contacto y soporte': '🚀✨ Contact et assistance'
+  },
+  it: {
+    'Idioma': 'Lingua',
+    'Moneda': 'Valuta',
+    'Sistema kawaii para organizar pagos y turnos': 'Sistema kawaii per organizzare pagamenti e turni',
+    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Scegli il tuo piano Kawaii',
+    'Compra tu licencia y organiza tus tandas con amor.': 'Acquista la licenza e organizza i tuoi gruppi con cura.',
+    '🍓 Prueba gratis': '🍓 Prova gratuita',
+    '🐼 Plan Trimestral': '🐼 Piano trimestrale',
+    '🥝 Plan Anual': '🥝 Piano annuale',
+    '🍓 Comenzar gratis': '🍓 Inizia gratis',
+    '🔐 Activar licencia': '🔐 Attiva licenza',
+    'Clave de licencia': 'Chiave della licenza',
+    '🌸 Mis tandas': '🌸 I miei gruppi',
+    '＋ Crear tanda': '＋ Crea gruppo',
+    'Nombre': 'Nome',
+    'Teléfono': 'Telefono',
+    'Frecuencia': 'Frequenza',
+    'Semanal': 'Settimanale',
+    'Quincenal': 'Ogni due settimane',
+    'Mensual': 'Mensile',
+    'Guardar datos de tanda': 'Salva i dati del gruppo',
+    'Calendario de pagos': 'Calendario dei pagamenti',
+    'Integrantes': 'Partecipanti',
+    'Pagos pendientes': 'Pagamenti in sospeso',
+    'Editar': 'Modifica',
+    'Borrar': 'Elimina',
+    'Cancelar': 'Annulla',
+    'Enviar correo': 'Invia e-mail',
+    '🚀✨ Contacto y soporte': '🚀✨ Contatti e assistenza'
+  }
+};
 
-languageSelect.addEventListener('change',()=>{
-  selectedLanguage=languageSelect.value;
-  localStorage.setItem(LOCALE_KEY,selectedLanguage);
+const originalTexts = new WeakMap();
+
+function translatePage() {
+  const dictionary = translations[selectedLanguage];
+  if (!dictionary) {
+    location.reload();
+    return;
+  }
+
+  function walk(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      if (!originalTexts.has(node)) {
+        originalTexts.set(node, node.nodeValue);
+      }
+
+      const original = originalTexts.get(node);
+      const key = original.trim();
+
+      if (dictionary[key]) {
+        const start = original.indexOf(key);
+        node.nodeValue =
+          original.slice(0, start) +
+          dictionary[key] +
+          original.slice(start + key.length);
+      } else {
+        node.nodeValue = original;
+      }
+      return;
+    }
+
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    if (['SCRIPT', 'STYLE'].includes(node.tagName)) return;
+
+    for (const child of node.childNodes) walk(child);
+
+    for (const attr of ['placeholder', 'aria-label', 'title']) {
+      if (!node.hasAttribute(attr)) continue;
+
+      const originalAttr = 'data-original-' + attr;
+      if (!node.hasAttribute(originalAttr)) {
+        node.setAttribute(originalAttr, node.getAttribute(attr));
+      }
+
+      const original = node.getAttribute(originalAttr);
+      node.setAttribute(attr, dictionary[original] || original);
+    }
+  }
+
+  walk(document.body);
+}
+
+languageSelect.addEventListener('change', () => {
+  selectedLanguage = languageSelect.value;
+  localStorage.setItem(LOCALE_KEY, selectedLanguage);
+  translatePage();
 });
+
+translatePage();
+
 
 const REMEMBER_KEY='tandaKawaii_remembered_license_v1';
 let licenseKey='',plan={id:'',name:'',maxTandas:1,maxIntegrantes:3,expiresAt:''},db={tandas:[]},activeId=null;
