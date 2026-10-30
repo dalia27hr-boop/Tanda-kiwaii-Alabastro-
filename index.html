@@ -34,22 +34,9 @@ body:has(#selected-plan-bar:not(.hidden)) main.wrap{padding-top:104px}
     <div class="field" style="flex:1;min-width:140px;margin:0">
       <label for="language-select">🌐 Idioma</label>
       <select id="language-select">
-        <option value="es">🇲🇽 Español</option>
-        <option value="en">🇺🇸 English</option>
-        <option value="pt">🇧🇷 Português</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="it">🇮🇹 Italiano</option>
-      </select>
-    </div>
-    <div class="field" style="flex:1;min-width:140px;margin:0">
-      <label for="currency-select">💰 Moneda</label>
-      <select id="currency-select">
-        <option value="MXN">🇲🇽 MXN — Peso mexicano</option>
-        <option value="USD">🇺🇸 USD — Dólar estadounidense</option>
-        <option value="EUR">🇪🇺 EUR — Euro</option>
-        <option value="BRL">🇧🇷 BRL — Real brasileño</option>
-        <option value="COP">🇨🇴 COP — Peso colombiano</option>
-      </select>
+  <option value="es">🇲🇽 Español</option>
+  <option value="en">🇺🇸 English</option>
+</select>
     </div>
   </div>
 </section>
@@ -167,127 +154,234 @@ currencySelect.addEventListener('change',()=>{
   if(activeId)renderDetail();
 });
 const translations = {
+  es: {
+    "Tandas": "Tandas",
+    "Sistema kawaii para organizar pagos y turnos": "Sistema kawaii para organizar pagos y turnos",
+    "Inicio": "Inicio",
+    "Nueva tanda": "Nueva tanda",
+    "Guardar": "Guardar",
+    "Cancelar": "Cancelar",
+    "Eliminar": "Eliminar",
+    "Editar": "Editar",
+    "Volver": "Volver",
+    "Cerrar": "Cerrar",
+    "Aceptar": "Aceptar",
+    "Continuar": "Continuar",
+    "Planes": "Planes",
+    "Plan activo": "Plan activo",
+    "Prueba gratis": "Prueba gratis",
+    "Gratis": "Gratis",
+    "Trimestral": "Trimestral",
+    "Anual": "Anual",
+    "1 mes": "1 mes",
+    "3 meses": "3 meses",
+    "1 año": "1 año",
+    "Integrantes": "Integrantes",
+    "Máximo 4 integrantes": "Máximo 4 integrantes",
+    "Máximo 12 integrantes": "Máximo 12 integrantes",
+    "Ilimitados": "Ilimitados",
+    "Nombre de la tanda": "Nombre de la tanda",
+    "Monto por pago": "Monto por pago",
+    "Fecha de inicio": "Fecha de inicio",
+    "Fecha de finalización": "Fecha de finalización",
+    "Frecuencia de pago": "Frecuencia de pago",
+    "Semanal": "Semanal",
+    "Quincenal": "Quincenal",
+    "Mensual": "Mensual",
+    "Moneda de esta tanda": "Moneda de esta tanda",
+    "Participante": "Participante",
+    "Nombre del integrante": "Nombre del integrante",
+    "Teléfono": "Teléfono",
+    "Agregar integrante": "Agregar integrante",
+    "Pagado": "Pagado",
+    "Pendiente": "Pendiente",
+    "Atrasado": "Atrasado",
+    "Próximo turno": "Próximo turno",
+    "Calendario de pagos": "Calendario de pagos",
+    "Resumen de esta tanda": "Resumen de esta tanda",
+    "Total esperado": "Total esperado",
+    "Pagos recibidos": "Pagos recibidos",
+    "Total pendiente": "Total pendiente",
+    "Próximos pagos": "Próximos pagos",
+    "Compartir por WhatsApp": "Compartir por WhatsApp",
+    "No hay tandas registradas": "No hay tandas registradas",
+    "No hay integrantes registrados": "No hay integrantes registrados",
+    "¿Deseas eliminar esta tanda?": "¿Deseas eliminar esta tanda?",
+    "¿Deseas eliminar este integrante?": "¿Deseas eliminar este integrante?",
+    "El nombre es obligatorio": "El nombre es obligatorio",
+    "El monto debe ser mayor que cero": "El monto debe ser mayor que cero",
+    "Cambios guardados correctamente": "Cambios guardados correctamente",
+    "Tanda creada correctamente": "Tanda creada correctamente",
+    "Tanda actualizada correctamente": "Tanda actualizada correctamente",
+    "Licencia activa": "Licencia activa",
+    "Activar licencia": "Activar licencia",
+    "Código de licencia": "Código de licencia",
+    "Aceptar términos y condiciones": "Aceptar términos y condiciones",
+    "Términos y condiciones": "Términos y condiciones",
+    "Privacidad": "Privacidad",
+    "Idioma": "Idioma",
+    "Moneda predeterminada": "Moneda predeterminada",
+    "Español": "Español",
+    "Inglés": "Inglés",
+    "Peso mexicano": "Peso mexicano",
+    "Dólar estadounidense": "Dólar estadounidense"
+  },
+
   en: {
-    'Idioma': 'Language',
-    'Moneda': 'Currency',
-    'Sistema kawaii para organizar pagos y turnos': 'Kawaii system to organize payments and turns',
-    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Choose your Kawaii plan',
-    'Compra tu licencia y organiza tus tandas con amor.': 'Buy your license and organize your savings groups with love.',
-    '🍓 Prueba gratis': '🍓 Free trial',
-    '🐼 Plan Trimestral': '🐼 Quarterly Plan',
-    '🥝 Plan Anual': '🥝 Annual Plan',
-    '🍓 Comenzar gratis': '🍓 Start free trial',
-    '🔐 Activar licencia': '🔐 Activate license',
-    'Clave de licencia': 'License key',
-    '🌸 Mis tandas': '🌸 My groups',
-    '＋ Crear tanda': '＋ Create group',
-    'Nombre': 'Name',
-    'Teléfono': 'Phone',
-    'Frecuencia': 'Frequency',
-    'Semanal': 'Weekly',
-    'Quincenal': 'Every two weeks',
-    'Mensual': 'Monthly',
-    'Guardar datos de tanda': 'Save group details',
-    'Calendario de pagos': 'Payment calendar',
-    'Integrantes': 'Participants',
-    'Pagos pendientes': 'Pending payments',
-    'Editar': 'Edit',
-    'Borrar': 'Delete',
-    'Cancelar': 'Cancel',
-    'Enviar correo': 'Send email',
-    '🚀✨ Contacto y soporte': '🚀✨ Contact and support'
-  },
-  pt: {
-    'Idioma': 'Idioma',
-    'Moneda': 'Moeda',
-    'Sistema kawaii para organizar pagos y turnos': 'Sistema kawaii para organizar pagamentos e turnos',
-    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Escolha seu plano Kawaii',
-    'Compra tu licencia y organiza tus tandas con amor.': 'Compre sua licença e organize seus grupos com carinho.',
-    '🍓 Prueba gratis': '🍓 Teste grátis',
-    '🐼 Plan Trimestral': '🐼 Plano trimestral',
-    '🥝 Plan Anual': '🥝 Plano anual',
-    '🍓 Comenzar gratis': '🍓 Começar grátis',
-    '🔐 Activar licencia': '🔐 Ativar licença',
-    'Clave de licencia': 'Chave de licença',
-    '🌸 Mis tandas': '🌸 Meus grupos',
-    '＋ Crear tanda': '＋ Criar grupo',
-    'Nombre': 'Nome',
-    'Teléfono': 'Telefone',
-    'Frecuencia': 'Frequência',
-    'Semanal': 'Semanal',
-    'Quincenal': 'A cada quinze dias',
-    'Mensual': 'Mensal',
-    'Guardar datos de tanda': 'Salvar dados do grupo',
-    'Calendario de pagos': 'Calendário de pagamentos',
-    'Integrantes': 'Participantes',
-    'Pagos pendientes': 'Pagamentos pendentes',
-    'Editar': 'Editar',
-    'Borrar': 'Excluir',
-    'Cancelar': 'Cancelar',
-    'Enviar correo': 'Enviar e-mail',
-    '🚀✨ Contacto y soporte': '🚀✨ Contato e suporte'
-  },
-  fr: {
-    'Idioma': 'Langue',
-    'Moneda': 'Devise',
-    'Sistema kawaii para organizar pagos y turnos': 'Système kawaii pour organiser les paiements et les tours',
-    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Choisissez votre forfait Kawaii',
-    'Compra tu licencia y organiza tus tandas con amor.': 'Achetez votre licence et organisez vos groupes avec soin.',
-    '🍓 Prueba gratis': '🍓 Essai gratuit',
-    '🐼 Plan Trimestral': '🐼 Forfait trimestriel',
-    '🥝 Plan Anual': '🥝 Forfait annuel',
-    '🍓 Comenzar gratis': '🍓 Commencer gratuitement',
-    '🔐 Activar licencia': '🔐 Activer la licence',
-    'Clave de licencia': 'Clé de licence',
-    '🌸 Mis tandas': '🌸 Mes groupes',
-    '＋ Crear tanda': '＋ Créer un groupe',
-    'Nombre': 'Nom',
-    'Teléfono': 'Téléphone',
-    'Frecuencia': 'Fréquence',
-    'Semanal': 'Hebdomadaire',
-    'Quincenal': 'Toutes les deux semaines',
-    'Mensual': 'Mensuel',
-    'Guardar datos de tanda': 'Enregistrer le groupe',
-    'Calendario de pagos': 'Calendrier des paiements',
-    'Integrantes': 'Membres',
-    'Pagos pendientes': 'Paiements en attente',
-    'Editar': 'Modifier',
-    'Borrar': 'Supprimer',
-    'Cancelar': 'Annuler',
-    'Enviar correo': 'Envoyer un e-mail',
-    '🚀✨ Contacto y soporte': '🚀✨ Contact et assistance'
-  },
-  it: {
-    'Idioma': 'Lingua',
-    'Moneda': 'Valuta',
-    'Sistema kawaii para organizar pagos y turnos': 'Sistema kawaii per organizzare pagamenti e turni',
-    '🌈 ☁️ Elige tu plan Kawaii': '🌈 ☁️ Scegli il tuo piano Kawaii',
-    'Compra tu licencia y organiza tus tandas con amor.': 'Acquista la licenza e organizza i tuoi gruppi con cura.',
-    '🍓 Prueba gratis': '🍓 Prova gratuita',
-    '🐼 Plan Trimestral': '🐼 Piano trimestrale',
-    '🥝 Plan Anual': '🥝 Piano annuale',
-    '🍓 Comenzar gratis': '🍓 Inizia gratis',
-    '🔐 Activar licencia': '🔐 Attiva licenza',
-    'Clave de licencia': 'Chiave della licenza',
-    '🌸 Mis tandas': '🌸 I miei gruppi',
-    '＋ Crear tanda': '＋ Crea gruppo',
-    'Nombre': 'Nome',
-    'Teléfono': 'Telefono',
-    'Frecuencia': 'Frequenza',
-    'Semanal': 'Settimanale',
-    'Quincenal': 'Ogni due settimane',
-    'Mensual': 'Mensile',
-    'Guardar datos de tanda': 'Salva i dati del gruppo',
-    'Calendario de pagos': 'Calendario dei pagamenti',
-    'Integrantes': 'Partecipanti',
-    'Pagos pendientes': 'Pagamenti in sospeso',
-    'Editar': 'Modifica',
-    'Borrar': 'Elimina',
-    'Cancelar': 'Annulla',
-    'Enviar correo': 'Invia e-mail',
-    '🚀✨ Contacto y soporte': '🚀✨ Contatti e assistenza'
+    "Tandas": "Savings Groups",
+    "Sistema kawaii para organizar pagos y turnos": "Kawaii system to organize payments and turns",
+    "Inicio": "Home",
+    "Nueva tanda": "New savings group",
+    "Guardar": "Save",
+    "Cancelar": "Cancel",
+    "Eliminar": "Delete",
+    "Editar": "Edit",
+    "Volver": "Back",
+    "Cerrar": "Close",
+    "Aceptar": "Accept",
+    "Continuar": "Continue",
+    "Planes": "Plans",
+    "Plan activo": "Active plan",
+    "Prueba gratis": "Free trial",
+    "Gratis": "Free",
+    "Trimestral": "Quarterly",
+    "Anual": "Annual",
+    "1 mes": "1 month",
+    "3 meses": "3 months",
+    "1 año": "1 year",
+    "Integrantes": "Members",
+    "Máximo 4 integrantes": "Maximum 4 members",
+    "Máximo 12 integrantes": "Maximum 12 members",
+    "Ilimitados": "Unlimited",
+    "Nombre de la tanda": "Savings group name",
+    "Monto por pago": "Payment amount",
+    "Fecha de inicio": "Start date",
+    "Fecha de finalización": "End date",
+    "Frecuencia de pago": "Payment frequency",
+    "Semanal": "Weekly",
+    "Quincenal": "Biweekly",
+    "Mensual": "Monthly",
+    "Moneda de esta tanda": "Currency for this group",
+    "Participante": "Participant",
+    "Nombre del integrante": "Member name",
+    "Teléfono": "Phone",
+    "Agregar integrante": "Add member",
+    "Pagado": "Paid",
+    "Pendiente": "Pending",
+    "Atrasado": "Overdue",
+    "Próximo turno": "Next turn",
+    "Calendario de pagos": "Payment calendar",
+    "Resumen de esta tanda": "Group summary",
+    "Total esperado": "Expected total",
+    "Pagos recibidos": "Payments received",
+    "Total pendiente": "Outstanding balance",
+    "Próximos pagos": "Upcoming payments",
+    "Compartir por WhatsApp": "Share on WhatsApp",
+    "No hay tandas registradas": "No savings groups registered",
+    "No hay integrantes registrados": "No members registered",
+    "¿Deseas eliminar esta tanda?": "Do you want to delete this savings group?",
+    "¿Deseas eliminar este integrante?": "Do you want to delete this member?",
+    "El nombre es obligatorio": "Name is required",
+    "El monto debe ser mayor que cero": "Amount must be greater than zero",
+    "Cambios guardados correctamente": "Changes saved successfully",
+    "Tanda creada correctamente": "Savings group created successfully",
+    "Tanda actualizada correctamente": "Savings group updated successfully",
+    "Licencia activa": "Active license",
+    "Activar licencia": "Activate license",
+    "Código de licencia": "License code",
+    "Aceptar términos y condiciones": "Accept terms and conditions",
+    "Términos y condiciones": "Terms and conditions",
+    "Privacidad": "Privacy",
+    "Idioma": "Language",
+    "Moneda predeterminada": "Default currency",
+    "Español": "Spanish",
+    "Inglés": "English",
+    "Peso mexicano": "Mexican peso",
+    "Dólar estadounidense": "US dollar"
   }
 };
+
+let selectedLanguage =
+  localStorage.getItem("tandaKawaii_language_v1") || "es";
+
+if (!["es", "en"].includes(selectedLanguage)) {
+  selectedLanguage = "es";
+}
+
+function tr(text) {
+  return translations[selectedLanguage]?.[text] || text;
+}
+
+function translatePage() {
+  document.documentElement.lang =
+    selectedLanguage === "en" ? "en-US" : "es-MX";
+
+  document.querySelectorAll("[data-i18n]").forEach(element => {
+    const key = element.dataset.i18n;
+    if (translations[selectedLanguage]?.[key]) {
+      element.textContent = translations[selectedLanguage][key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+    const key = element.dataset.i18nPlaceholder;
+    if (translations[selectedLanguage]?.[key]) {
+      element.placeholder = translations[selectedLanguage][key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-title]").forEach(element => {
+    const key = element.dataset.i18nTitle;
+    if (translations[selectedLanguage]?.[key]) {
+      element.title = translations[selectedLanguage][key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-aria]").forEach(element => {
+    const key = element.dataset.i18nAria;
+    if (translations[selectedLanguage]?.[key]) {
+      element.setAttribute(
+        "aria-label",
+        translations[selectedLanguage][key]
+      );
+    }
+  });
+}
+
+function changeLanguage(language) {
+  if (!["es", "en"].includes(language)) return;
+
+  selectedLanguage = language;
+
+  localStorage.setItem(
+    "tandaKawaii_language_v1",
+    selectedLanguage
+  );
+
+  translatePage();
+
+  if (typeof renderTandas === "function") renderTandas();
+  if (typeof renderDetail === "function" &&
+      typeof currentTandaId !== "undefined" &&
+      currentTandaId) {
+    renderDetail();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const selector = document.getElementById("language-select");
+
+  if (selector) {
+    selector.value = selectedLanguage;
+
+    selector.addEventListener("change", event => {
+      changeLanguage(event.target.value);
+    });
+  }
+
+  translatePage();
+});
+
 
 const originalTexts = new WeakMap();
 
